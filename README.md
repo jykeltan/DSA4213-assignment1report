@@ -9,9 +9,9 @@ The report (PDF) is submitted separately. This repository contains the code need
 | File | Purpose |
 | --- | --- |
 | `data preparation.ipynb` | Downloads the three books from Project Gutenberg, cleans *Little Women*, makes the chapter-level split and builds the vocabulary → `outputs/data_prep.pkl` |
-| `part1_language model training.ipynb` | Part I: Kneser–Ney trigram, RNN, LSTM, Transformer; results table, loss curves, generated text. Also writes `lm_utils.py` |
+| `part1_language_model_training.ipynb` | Part I: Kneser–Ney trigram, RNN, LSTM, Transformer; results table, loss curves, generated text. Also writes `lm_utils.py` |
 | `part2_embeddings.ipynb` | Part II: own Skip-gram (SGNS) embeddings, GloVe 6B-100d, frozen-embedding LSTMs |
-| `part3_downstream representation analysis.ipynb` | Part III: passage dataset, frozen-LM features (mean / final-state pooling), logistic regression, baselines, error analysis |
+| `part3_downstream_representation_analysis.ipynb` | Part III: passage dataset, frozen-LM features (mean / final-state pooling), logistic regression, baselines, error analysis |
 | `lm_utils.py` | Shared models, training loop, evaluation and generation code (imported by Parts I–III) |
 | `requirements.txt` | Python dependencies |
 
@@ -69,7 +69,7 @@ Results may differ very slightly on different GPUs or library versions because o
 
 ## Tool use
 
-Code was generated and refined with an AI assistant (Claude, Anthropic); see the AI tool-use statement in the report.
+Some code was generated and refined with an AI assistant (Claude, Anthropic); see the AI tool-use statement in the report.
 
 ## References
 

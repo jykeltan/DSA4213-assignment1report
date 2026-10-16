@@ -1,4 +1,4 @@
-"""Shared utilities for DSA4213 Assignment 1 (Parts I-III).
+"""Shared utilities for DSA4213 Assignment 1 (All parts).
 Models, batching, training loop, evaluation, timing and text generation.
 """
 import math, time, copy, random, re

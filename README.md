@@ -8,10 +8,10 @@ The report (PDF) is submitted separately. This repository contains the code need
 
 | File | Purpose |
 | --- | --- |
-| `data preparation.ipynb` | Downloads the three books from Project Gutenberg, cleans *Little Women*, makes the chapter-level split and builds the vocabulary → `outputs/data_prep.pkl` |
-| `part1_language_model_training.ipynb` | Part I: Kneser–Ney trigram, RNN, LSTM, Transformer; results table, loss curves, generated text. Also writes `lm_utils.py` |
-| `part2_embeddings.ipynb` | Part II: own Skip-gram (SGNS) embeddings, GloVe 6B-100d, frozen-embedding LSTMs |
-| `part3_downstream_representation_analysis.ipynb` | Part III: passage dataset, frozen-LM features (mean / final-state pooling), logistic regression, baselines, error analysis |
+| `data_preparation.ipynb` | **Run 1st.** Downloads the three books from Project Gutenberg, cleans *Little Women*, makes the chapter-level split and builds the vocabulary → `outputs/data_prep.pkl` |
+| `part1_language_model_training.ipynb` | **Run 2nd.** Part I: Kneser–Ney trigram, RNN, LSTM, Transformer; results table, loss curves, generated text. Also writes `lm_utils.py` |
+| `part2_embeddings.ipynb` | **Run 3rd.** Part II: own Skip-gram (SGNS) embeddings, GloVe 6B-100d, frozen-embedding LSTMs |
+| `part3_downstream_representation_analysis.ipynb` | **Run 4th.** Part III: passage dataset, frozen-LM features (mean / final-state pooling), logistic regression, baselines, error analysis |
 | `lm_utils.py` | Shared models, training loop, evaluation and generation code (imported by Parts I–III) |
 | `requirements.txt` | Python dependencies |
 
@@ -30,15 +30,19 @@ No data files are included; everything is downloaded by the code.
 
 ## How to run (Google Colab, recommended)
 
-1. Create the folder `MyDrive/DSA4213_A1/` in your Google Drive and upload the four notebooks into it.
-   (To use a different location, change `BASE` in the first code cell of each notebook.)
-2. In each notebook: **Runtime → Change runtime type → T4 GPU**.
-3. Run the notebooks **in order**, top to bottom: `01` → `02` → `03` → `04`.
-   Each notebook mounts Drive, reads what the previous one saved in `outputs/`, and saves its own results there.
+1. Open each notebook in Colab, either straight from this repository (Colab → *File → Open notebook → GitHub* → paste the repo URL) or after uploading it to your Google Drive.
+2. In each notebook: **Runtime → Change runtime type → T4 GPU**, then **Runtime → Run all**, and allow Google Drive access when asked.
+3. Run the notebooks **in order**: `data_preparation` → `part1_language_model_training` → `part2_embeddings` → `part3_downstream_representation_analysis`.
 
-Approximate run time on a T4 GPU: `01` < 1 min · `02` ~3 min · `03` ~5 min (mostly the GloVe download) · `04` ~2 min.
+No manual setup is needed: the first notebook creates the working folder `MyDrive/DSA4213_A1/` (with `data/` and `outputs/`) in your own Drive. Each Colab notebook runs in a separate session, so each one re-mounts Drive and reads what the previous notebook saved there. (To use a different location, change `BASE` in the first code cell of all four notebooks.)
 
-**Running locally instead of Colab:** remove the `drive.mount(...)` line in the first cell, set `BASE` to a local folder, install `requirements.txt`, and run in the same order. A GPU is optional (CPU works, but neural training is roughly 50× slower).
+Approximate run time on a T4 GPU: data preparation < 1 min · Part I ~3 min · Part II ~5 min (mostly the GloVe download) · Part III ~2 min.
+
+**Nothing is read from the author's Google Drive.** `/content/drive/MyDrive/` is where Colab mounts the Drive of whoever is running the notebook; the `DSA4213_A1` folder is created automatically and all data is downloaded from the public sources below.
+
+**Running locally instead of Colab (VS Code / Jupyter):** no code changes are needed. The first cell of each notebook detects that it is not running in Colab, skips the Drive mount, and uses a local `DSA4213_A1/` folder next to the notebooks instead (all four notebooks share it). Clone this repository, `pip install -r requirements.txt`, open the notebooks from the repository folder and run them in the same order. A GPU is optional (CPU works, but neural training is roughly 50× slower).
+
+**Expected results.** Reported results were obtained on a Tesla T4 GPU (Google Colab). A CPU-only re-run of Part I on an Apple Mac gave KN trigram 132.6 (identical), RNN 115.3, LSTM 106.6 and Transformer 145.6 test perplexity (vs 115.0 / 106.2 / 143.6 on GPU): the same ranking and early-stopping pattern, with different training times. Small numerical differences across hardware are expected.
 
 ## Preprocessing (summary)
 
@@ -69,7 +73,7 @@ Results may differ very slightly on different GPUs or library versions because o
 
 ## Tool use
 
-Some code was generated and refined with an AI assistant (Claude, Anthropic); see the AI tool-use statement in the report.
+Code was generated and refined with an AI assistant (Claude, Anthropic); see the AI tool-use statement in the report.
 
 ## References
 
